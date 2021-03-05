@@ -31,4 +31,3 @@
 * eslint
 * jest
 * metro-react-native-babel-preset
-* react-test-renderer

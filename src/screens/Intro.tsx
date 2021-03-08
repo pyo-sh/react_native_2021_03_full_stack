@@ -13,20 +13,21 @@ import { Actions } from 'react-native-router-flux';
 // declare module '*.png';
 // import * as mainImage from 'resource/intro.png';
 
-import IntroStyle from 'styles/screens/IntroStyle';
+import IntroStyle from '~/styles/screens/IntroStyle';
+import BaseStyle from '~/styles/BaseStyle';
 
 const Intro = () => {
   const onPressLoginButton = () => {
     Actions.login();
   }
 
-  return <View style={IntroStyle.posRel}>
-    <Image source={require('resource/intro.png')}/>
+  return <View style={BaseStyle.position_Relative}>
+    <Image source={require('~/resource/intro.png')}/>
     <View style={IntroStyle.mainTitle}>
       <Text style={IntroStyle.mainText}>
         One Thought A Day
       </Text>
-      <Text style={[IntroStyle.mainText, IntroStyle.mainText2]}>
+      <Text style={IntroStyle.mainSubText}>
         share your everyday thoughts
         {"\n"}
         and see what others are thinking!

@@ -7,8 +7,9 @@ import {
   Stack,
 } from 'react-native-router-flux';
 
-import Intro from '../screens/Intro';
-import Login from '../screens/Login';
+import Intro from '~/screens/Intro';
+import Login from '~/screens/Login';
+import Signup from '~/screens/Signup';
 
 const RouterComponent = () => {
   return (
@@ -18,7 +19,8 @@ const RouterComponent = () => {
 				gesturesEnabled={false} panHandlers={null}/>
         <Scene key="login" hideNavBar component={Login} 
 				gesturesEnabled={false} panHandlers={null}/>
-				
+				<Scene key="signup" hideNavBar component={Signup} 
+				gesturesEnabled={false} panHandlers={null}/>
 				{/*
         <Scene key="signup" hideNavBar component={Signup} />
 				*/}

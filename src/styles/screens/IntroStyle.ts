@@ -1,10 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 const IntroStyle = StyleSheet.create({
-    posRel : {
-        position: 'relative',
-    },
-
     mainTitle:{
         top: 150,
         left: 0,
@@ -19,7 +15,10 @@ const IntroStyle = StyleSheet.create({
         color:'white',
         fontWeight:'bold',
     },
-    mainText2:{
+    mainSubText:{
+        fontSize: 16,
+        color:'white',
+        fontWeight:'bold',
         marginTop: 16,
     },
 

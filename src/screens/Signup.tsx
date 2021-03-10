@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     ScrollView,
     View,
@@ -11,7 +11,26 @@ import {
 import SignupStyle from '~/styles/screens/SignupStyle';
 import BaseStyle from '~/styles/BaseStyle';
 
+import DropDownInput from '~/components/library/DropDownInput';
+import { langList } from '~/Common';
+
+interface inputType {
+    email: string,
+    nickName: string,
+    pw:  string,
+    pwCheck:  string,
+    lang:  string,
+}
+
 const Signup = () => {
+    const [inputValue, setInputValue] = useState<inputType>({
+        email:"",
+        nickName:"",
+        pw: "",
+        pwCheck: "",
+        lang: "",
+    });
+    
     return <View style={SignupStyle.wrapper}>
         <View style={SignupStyle.inputWrapper}>
             <Text style={SignupStyle.guidelineText}>
@@ -60,6 +79,15 @@ const Signup = () => {
                 //onChangeText={}
                 />
         </View>
+
+        <DropDownInput
+            label="Language"
+            renderKey="lang"
+            list={langList}
+            txtInit="choose your lang"
+            valueInit={inputValue.lang}
+            //onSelectClick={onChange}
+            />
         
         <TouchableOpacity
             style={[

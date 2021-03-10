@@ -20,8 +20,17 @@ const BaseStyle = StyleSheet.create({
     marginTop_80: {
         marginTop: 80
     },
+    marginBottom_16: {
+		marginBottom:16,
+	},
     flexDirection_Row: {
         flexDirection: 'row'
+    },
+    fontSize_12: {
+        fontSize: 12
+    },
+    fontSize_14: {
+        fontSize:14
     },
     fontWeight_bold: {
         fontWeight: 'bold'
@@ -32,6 +41,12 @@ const BaseStyle = StyleSheet.create({
     color_White: {
         color: Color.white
     },
+    color_DarkGray: {
+        color: Color.dark_gray
+    },
+    color_Black: {
+		color: Color.black
+	},
     backgroundColor_Primary: {
         backgroundColor: Color.primary
     },

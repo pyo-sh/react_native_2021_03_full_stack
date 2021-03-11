@@ -11,11 +11,23 @@ const BaseStyle = StyleSheet.create({
     padding_20: {
         padding: 20
     },
+    paddingLeft_20: {
+        paddingLeft: 20
+    },
+    paddingRight_20: {
+        paddingRight: 20
+    },
     marginRight_8: {
         marginRight: 8
     },
     marginLeft_8: {
         marginLeft: 8
+    },
+    marginTop_32: {
+        marginTop: 32
+    },
+    marginTop_50: {
+        marginTop: 50
     },
     marginTop_80: {
         marginTop: 80

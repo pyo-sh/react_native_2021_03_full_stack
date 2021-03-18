@@ -16,7 +16,8 @@ const DailyStyle = StyleSheet.create({
 
     daily_Items: {
         marginTop: 40,
-        padding: '40 20 40 20',
+        paddingBottom: 40,
+        paddingTop: 40,
         borderRadius: 20, 
         backgroundColor: 'white',
     },
@@ -54,7 +55,8 @@ const DailyStyle = StyleSheet.create({
     },
     daily_Bottom_Button: {
         height: 56,
-        padding: '0 20 0 20',
+        paddingLeft: 20,
+        paddingRight: 20,
         justifyContent: 'center',
 		alignItems: 'center',
 		fontSize: 14,

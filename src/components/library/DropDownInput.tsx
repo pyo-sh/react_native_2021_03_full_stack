@@ -62,7 +62,7 @@ const DropDownInput = ({label, list, renderKey, onSelectClick, valueInit, txtIni
                     txt={object.txt}
                     value={object.value}
                     onPress={() => {
-                        onSelectClick(renderKey, object.value)
+                        onSelectClick(renderKey)(object.value)
                         toggleDropDownInput();
                     }}/>
             </View>

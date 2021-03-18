@@ -1,35 +1,91 @@
 import React, { useState } from 'react';
 import {
-    ScrollView,
     View,
     Text,
     TextInput,
-    FlatList,
     TouchableOpacity,
+    Alert,
 } from 'react-native';
 
 import SignupStyle from '~/styles/screens/SignupStyle';
 import BaseStyle from '~/styles/BaseStyle';
 
 import DropDownInput from '~/components/library/DropDownInput';
-import { langList } from '~/Common';
+import { emailRule, langList } from '~/Common';
+import { Actions } from 'react-native-router-flux';
 
-interface inputType {
+interface InputType {
     email: string,
     nickName: string,
-    pw:  string,
-    pwCheck:  string,
+    password:  string,
+    passwordCheck:  string,
     lang:  string,
 }
 
 const Signup = () => {
-    const [inputValue, setInputValue] = useState<inputType>({
+    const [inputValue, setInputValue] = useState<InputType>({
         email:"",
         nickName:"",
-        pw: "",
-        pwCheck: "",
+        password: "",
+        passwordCheck: "",
         lang: "",
     });
+
+    const onChangeValue = (key: string) => (event: string) => {
+        setInputValue((prevState) => {
+            return {
+                ...prevState,
+                [key]: event.toLowerCase(),
+            }
+        });
+    }
+
+    const validateInput = () => {
+        if(inputValue.email) {
+            if(!emailRule.test(inputValue.email)) {
+                return {
+                    success: false,
+                    message: "이메일형식이 올바르지 않습니다."
+                }
+            }
+        }
+        else {
+            return {
+                success: false,
+                message: "이메일을 입력해주세요."
+            }
+        }
+        
+        if (inputValue.password !== inputValue.passwordCheck) {
+            return {
+                success: false,
+                message: "check your password",
+            }
+        }
+        
+        return {
+            success: true,
+            message: "good to go"
+        }
+    }
+
+    const createAccount = () => {
+        const result = validateInput();
+        if(!result.success){
+            Alert.alert(result.message);
+            return
+        }
+
+        const payload = {
+            email: inputValue.email,
+            password: inputValue.password,
+            nick_name: inputValue.nickName,
+        }
+
+        // APIS~
+
+        Actions.daily();
+    }
     
     return <View style={SignupStyle.wrapper}>
         <View style={SignupStyle.inputWrapper}>
@@ -39,8 +95,8 @@ const Signup = () => {
             <TextInput
                 style={SignupStyle.valueInput}
                 placeholder="email"
-                //value={}
-                //onChangeText={}
+                value={inputValue.email}
+                onChangeText={onChangeValue("email")}
                 />
         </View>
 
@@ -51,8 +107,8 @@ const Signup = () => {
             <TextInput
                 style={SignupStyle.valueInput}
                 placeholder="nickName"
-                //value={}
-                //onChangeText={}
+                value={inputValue.nickName}
+                onChangeText={onChangeValue("nickName")}
                 />
         </View>
 
@@ -63,8 +119,8 @@ const Signup = () => {
             <TextInput
                 style={SignupStyle.valueInput}
                 placeholder="password"
-                //value={}
-                //onChangeText={}
+                value={inputValue.password}
+                onChangeText={onChangeValue("password")}
                 />
         </View>
 
@@ -75,8 +131,8 @@ const Signup = () => {
             <TextInput
                 style={SignupStyle.valueInput}
                 placeholder="password check"
-                //value={}
-                //onChangeText={}
+                value={inputValue.passwordCheck}
+                onChangeText={onChangeValue("passwordCheck")}
                 />
         </View>
 
@@ -86,14 +142,14 @@ const Signup = () => {
             list={langList}
             txtInit="choose your lang"
             valueInit={inputValue.lang}
-            //onSelectClick={onChange}
+            onSelectClick={onChangeValue}
             />
         
         <TouchableOpacity
             style={[
                 SignupStyle.button
             ]}
-            //onPress={}
+            onPress={createAccount}
             >
             <Text style={[
                 SignupStyle.buttonText

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     ScrollView,
     View,
@@ -8,16 +8,88 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import Toggle from '~/components/library/Toggle';
+import OthersMemoCard , { OthersMemoItemType } from '~/components/daily/OthersMemoCard';
 
 import DailyStyle from '~/styles/screens/DailyStyle';
 import BaseStyle from '~/styles/BaseStyle';
 
-const Daily = () => {
+export type MemoType = {
+    content: string,
+    likes: number,
+    created_at?: string,
+}
+
+export type QuestionType = {
+    id: number | null,
+    title: string,
+    content: string,
+}
+
+const Daily: React.FC = () => {
+    const [question, setQuestion] = useState<QuestionType>({
+        id: null,
+        title: "",
+        content: "",
+    });
+    const [memo, setMemo] = useState<MemoType|null>(null);
+    const [othersMemos, setOthersMemos] = useState<OthersMemoItemType[]>([{
+        id: 0,
+        content: "123",
+        likes: 2,
+        user: "hi",
+        created_at: "19970609",
+        do_i_like: false,
+    }]);
+
+    const [content, setContent] = useState<string>("");
+    const [isPublic, setIsPublic] = useState<boolean>(true);
+    const flatListRef = useRef(null);
+
+    useEffect(() => {
+        
+    },[]);
+
+    const submitMemo = () => {
+        let requestMemo: any = {
+            content: content,
+            likes: 0,
+        };
+
+        setMemo(requestMemo);
+
+        requestMemo = {
+            ...requestMemo,
+            question_id: question.id,
+            is_public: isPublic,
+        };
+
+        // APIS
+    }
+
+    const likeOtherMemo = (memo: OthersMemoItemType) => {
+        const memoIndex = othersMemos.findIndex(
+            (othersMemo:OthersMemoItemType) => othersMemo.id === memo.id
+        );
+        const likedMemo = {
+            ...othersMemos[memoIndex],
+            do_i_like: !memo.do_i_like,
+            likes: memo.likes + (memo.do_i_like ? -1 : 1)
+        };
+
+        // APIS
+
+        setOthersMemos((prevState) => {
+            const returnMemos = [...prevState];
+            returnMemos[memoIndex] = likedMemo;
+            return returnMemos;
+        });
+    }
+
     return <View>
         <ScrollView
             style={BaseStyle.backgroundColor_Primary}
-            //showsVerticalScrollIndicator ={false}
-            //showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator ={false}
+            showsHorizontalScrollIndicator={false}
             >
             <View style={BaseStyle.marginTop_80}></View>
             <View style={[
@@ -45,40 +117,39 @@ const Daily = () => {
                     Advice
                 </Text>
                 <Text style={DailyStyle.daily_Item_Content}>
-                    {/*question.content*/}
+                    { question.content }
                 </Text>
 
                 <View style={DailyStyle.daily_Item_Empty}></View>
-                {<>
-                {/* memo ? */}
+                {memo
+                ?
                 <View style={BaseStyle.position_Relative}>
                     <Text style={{fontSize:20, fontFamily:"Cochin"}}>
-                        {/* {memo.content} */}
+                        {memo.content}
                     </Text>
                 </View>
-                {/* //: */}
+                :
                 <TextInput
                     multiline
                     style={{borderWidth:0, borderColor:'transparent', padding:16, height:200,}}
                     placeholder="Enter text (2,200 characters limit)"
-                    //onChangeText={(value) => setContent(value)}
-                    //value={content}
+                    onChangeText={( value: string ) => setContent(value)}
+                    value={content}
                     />
-                </>}
-                {
-                // /* !memo && */
+                }
+                {!memo &&
                 <View style={DailyStyle.daily_Item_Bottom}>
                     <View style={DailyStyle.daily_Item_Bottom}>
                         <Toggle
-                            //onToggle={(val) => {onChange(val)}}
-                            //isActive={isPublic}
+                            onToggle={( value: boolean ) => setIsPublic(value)}
+                            isActive={isPublic}
                         />
                         <Text style={DailyStyle.daily_Bottom_Toggle_Text}>
                             is public
                         </Text>
                     </View>
                     <TouchableOpacity
-                        //onPress={submit}
+                        onPress={submitMemo}
                         style={DailyStyle.daily_Bottom_Button}
                         >
                         <Text style={DailyStyle.daily_Bottom_Button_Text}>
@@ -112,20 +183,26 @@ const Daily = () => {
                 <Text style={DailyStyle.other_Item_Content}>
                     See others’ thoughts on the question
                 </Text>
-                {/* <FlatList
+                <FlatList
                     style={BaseStyle.marginTop_32}
                     ref={flatListRef}
                     horizontal={true}
-                    data={othersMemos}
-                    renderItem={renderOthersMemoCard}
-                    onEndReached={() => {
-                        if(othersMemos.length > 0){
-                        console.log('on_end_reached');
-                        }
+                    data={ othersMemos }
+                    renderItem={({ item }) => {
+                        return <OthersMemoCard
+                            index={item.id}
+                            othersMemo={item}
+                            likeOthersMemo={likeOtherMemo}
+                            />
                     }}
+                    // onEndReached={() => {
+                    //     // if(othersMemos.length > 0){
+                    //     //     console.log('on_end_reached');
+                    //     // }
+                    // }}
                     onEndReachedThreshold={0.1}
-                    keyExtractor={item => item.id}
-                    /> */}
+                    keyExtractor={item => item.id.toString()}
+                    />
                 {/*
                 ListHeaderComponent={<View style={{backgroundColor:'red',}}><Text>Header Component</Text></View>}
                 ListFooterComponent={<View><Text>Footer Component</Text></View>}

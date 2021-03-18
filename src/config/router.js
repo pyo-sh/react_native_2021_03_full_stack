@@ -10,6 +10,7 @@ import {
 import Intro from '~/screens/Intro';
 import Login from '~/screens/Login';
 import Signup from '~/screens/Signup';
+import Daily from '~/screens/Daily';
 
 const RouterComponent = () => {
   return (
@@ -20,6 +21,8 @@ const RouterComponent = () => {
         <Scene key="login" hideNavBar component={Login} 
 				gesturesEnabled={false} panHandlers={null}/>
 				<Scene key="signup" hideNavBar component={Signup} 
+				gesturesEnabled={false} panHandlers={null}/>
+        <Scene key="daily" hideNavBar component={Daily} 
 				gesturesEnabled={false} panHandlers={null}/>
 				{/*
         <Scene key="signup" hideNavBar component={Signup} />

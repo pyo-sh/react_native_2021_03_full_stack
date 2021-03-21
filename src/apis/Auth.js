@@ -1,23 +1,27 @@
-import {request} from '.';
+import { request } from '~/apis/index';
 
 export const signInAPI = (payload) => {
   return request({
-    url:'/authenticate/signin',
-    method:'POST',
-    body:JSON.stringify(payload)
-  }).then((data) => {
+    url: '/user/authenticate',
+    method: 'POST',
+    body: JSON.stringify(payload)
+  })
+  .then((data) => {
+    // DATA 처리 ~
     console.log('signin?');
     console.log(data);
     return data
   }, false)
 }
 
-export const postSignUpAPI = (payload) => {
+export const signUpAPI = (payload) => {
   return request({
-    url:'/authenticate/complete_signup',
-    method:'POST',
-    body:JSON.stringify(payload)
-  }).then((data) => {
+    url: '/user/signup',
+    method: 'POST',
+    body: JSON.stringify(payload)
+  })
+  .then((data) => {
+    // TODO : User Model 에 대해서 처리 할거야..?
     return data;
   }, false)
 }

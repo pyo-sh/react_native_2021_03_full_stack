@@ -10,7 +10,7 @@ const appReducer = combineReducers({
   user
 })
 
-const rootReducer = (state, action) => {
+const rootReducer = (state: any, action: any) => {
   if (action.type === USER_LOGOUT) {
     state = undefined;
   }

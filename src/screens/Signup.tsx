@@ -13,6 +13,7 @@ import BaseStyle from '~/styles/BaseStyle';
 import DropDownInput from '~/components/library/DropDownInput';
 import { emailRule, langList } from '~/Common';
 import { Actions } from 'react-native-router-flux';
+import { signUpAPI } from '~/apis/Auth';
 
 interface InputType {
     email: string,
@@ -24,10 +25,10 @@ interface InputType {
 
 const Signup = () => {
     const [inputValue, setInputValue] = useState<InputType>({
-        email:"",
-        nickName:"",
-        password: "",
-        passwordCheck: "",
+        email: "test@example.com",
+        nickName: "hiworld",
+        password: "123456",
+        passwordCheck: "123456",
         lang: "",
     });
 
@@ -69,7 +70,7 @@ const Signup = () => {
         }
     }
 
-    const createAccount = () => {
+    const createAccount = async () => {
         const result = validateInput();
         if(!result.success){
             Alert.alert(result.message);
@@ -80,11 +81,17 @@ const Signup = () => {
             email: inputValue.email,
             password: inputValue.password,
             nick_name: inputValue.nickName,
+            // birth?:
+            lang: inputValue.lang,
         }
 
         // APIS~
-
-        Actions.daily();
+        await signUpAPI(payload).then((data) => {
+            // 오류에 대해서 backend ...? 
+            if (data){
+                Actions.login();
+            }
+        });
     }
     
     return <View style={SignupStyle.wrapper}>

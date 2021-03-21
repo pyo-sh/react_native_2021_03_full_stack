@@ -19,3 +19,9 @@ export const Color = {
 	mid_blue: "#b2d2ff",
 	green: "#00a669"
 }
+
+// export const APP_SERVER_PATH = "http://localhost:3000";
+// Android의 AVD 에서는 localhost 를 10.0.2.2 로 가진다...
+export const APP_SERVER_PATH = "http://10.0.2.2:3000";
+
+export const APP_API_PATH = `${APP_SERVER_PATH}/api/v1`;

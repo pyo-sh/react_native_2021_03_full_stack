@@ -9,9 +9,12 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import LoginStyle from '~/styles/screens/LoginStyle';
 import BaseStyle from '~/styles/BaseStyle';
+
+import { signInAPI } from '~/apis/Auth';
 
 type LoginType = {
   email: string,
@@ -32,7 +35,19 @@ const Login = () => {
   }
 
   const onPressLoginButton = () => {
-    Actions.daily();
+    const payload = {
+      ...inputValue
+    }
+
+    signInAPI(payload).then((data) => {
+      if (data.success){
+        // TOKEN 저장
+        Actions.daily();
+      }
+      else if (data.message) {
+        Alert.alert(data.message);
+      }
+    });
   }
 
 	return <View style={BaseStyle.padding_20}>
